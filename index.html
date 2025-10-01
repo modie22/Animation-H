@@ -23,7 +23,7 @@
         stroke: rgba(0, 255, 255, 0.7);
 
         stroke-width: 0.5;
-         filter: url(#expand-glow);  
+        filter: url(#expand-glow);
       }
       .animated {
         fill: none;
@@ -36,7 +36,7 @@
         stroke: black;
         stroke-dasharray: 60 380;
 
-        stroke-width: 20;
+        stroke-width: 15;
         filter: url(#softFade);
         stroke-linecap: round;
         animation: dash 5s linear infinite;
@@ -52,33 +52,42 @@
   <body>
     <svg viewBox="0 0 100 100" width="250px" xmlns="http://www.w3.org/2000/svg">
       <defs>
-      <filter id="expand-glow" x="-50%" y="-50%" width="200%" height="200%">
-    
-      <feMorphology in="SourceGraphic" operator="dilate" radius="2" result="expanded"/>
- 
-      <feGaussianBlur in="expanded" stdDeviation="1.2" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>  
+        <filter id="expand-glow" x="-50%" y="-50%" width="200%" height="200%">
+          <feMorphology
+            in="SourceGraphic"
+            operator="dilate"
+            radius="2"
+            result="expanded"
+          />
 
-    <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blurredFade"/>
-      <feColorMatrix in="blurredFade" type="matrix"
-                     values="1.5 0 0 0 0
+          <feGaussianBlur in="expanded" stdDeviation="1.2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+
+        <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation="7"
+            result="blurredFade"
+          />
+          <feColorMatrix
+            in="blurredFade"
+            type="matrix"
+            values="1.5 0 0 0 0
                              0 1 0 0 0
                              0 0 1 0 0
-                             0 0 0 1.5 0"/>
-    </filter>
-
+                             0 0 0 1.5 0"
+          />
+        </filter>
       </defs>
       <path
         class="animated layer"
         d="M 10 10 L 10 90 L 35 90 L 35 60 L 65 60 L 65 90 L 90 90 L 90 10 L 65 10 L 65 40 L 35 40 L 35 10 Z"
       />
       <path
-          
         class="animated layer-thick"
         d="M 10 10 L 10 90 L 35 90 L 35 60 L 65 60 L 65 90 L 90 90 L 90 10 L 65 10 L 65 40 L 35 40 L 35 10 Z"
       />
