@@ -50,6 +50,7 @@
     </style>
   </head>
   <body>
+
     <svg viewBox="0 0 100 100" width="250px" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="neonS" x="-50%" y="-50%" width="200%" height="200%">
@@ -87,51 +88,6 @@
           </feMerge>
         </filter>
 
-        <filter id="neon" x="-50%" y="-50%" width="200%" height="200%">
-          <feMorphology
-            in="SourceGraphic"
-            operator="dilate"
-            radius="0.8"
-            result="m1"
-          />
-          <feGaussianBlur in="m1" stdDeviation="0.7" result="b1" />
-
-          <feMorphology
-            in="SourceGraphic"
-            operator="dilate"
-            radius="0.8"
-            result="m2"
-          />
-          <feGaussianBlur in="m2" stdDeviation="0.7" result="b2" />
-
-          <feColorMatrix
-            in="b1"
-            type="matrix"
-            values="1.5 0 0 0 0  
-                             0 1.5 0 0 0  
-                             0 0 1.5 0 0  
-                             0 0 0 1.8 0"
-            result="b1_enhanced"
-          />
-
-          <feColorMatrix
-            in="b2"
-            type="matrix"
-            values="1.2 0 0 0 0  
-                             0 1.2 0 0 0  
-                             0 0 1.2 0 0  
-                             0 0 0 1.0 0"
-            result="b2_enhanced"
-          />
-
-          <feMerge>
-            <feMergeNode in="b2_enhanced" />
-            <feMergeNode in="b2_enhanced" />
-            <feMergeNode in="b1_enhanced" />
-            <feMergeNode in="b1_enhanced" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
 
         <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur
