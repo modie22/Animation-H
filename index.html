@@ -22,7 +22,7 @@
       .layer {
         stroke: rgba(0, 255, 255, 0.7);
 
-        stroke-width: 0.5;
+        stroke-width: 1;
         filter: url(#expand-glow);
       }
       .animated {
@@ -36,7 +36,7 @@
         stroke: black;
         stroke-dasharray: 60 380;
 
-        stroke-width: 15;
+        stroke-width: 20;
         filter: url(#softFade);
         stroke-linecap: round;
         animation: dash 5s linear infinite;
@@ -50,6 +50,7 @@
     </style>
   </head>
   <body>
+
     <svg viewBox="0 0 100 100" width="250px" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="expand-glow" x="-50%" y="-50%" width="200%" height="200%">
@@ -70,7 +71,7 @@
         <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur
             in="SourceGraphic"
-            stdDeviation="7"
+            stdDeviation="10"
             result="blurredFade"
           />
           <feColorMatrix
