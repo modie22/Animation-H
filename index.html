@@ -21,8 +21,9 @@
       }
       .layer {
         stroke: rgba(0, 255, 255, 0.7);
-        filter: url(#super-neon-glow);
-        stroke-width: 1;
+
+        stroke-width: 0.5;
+         filter: url(#expand-glow);  
       }
       .animated {
         fill: none;
@@ -35,8 +36,8 @@
         stroke: black;
         stroke-dasharray: 60 380;
 
-        stroke-width: 14;
-        filter: url(#myShadow);
+        stroke-width: 20;
+        filter: url(#softFade);
         stroke-linecap: round;
         animation: dash 5s linear infinite;
       }
@@ -51,125 +52,33 @@
   <body>
     <svg viewBox="0 0 100 100" width="250px" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <filter id="super-neon-glow">
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="0.2 0.2"
-            result="glow1"
-          />
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="0.3 0.3"
-            result="glow2"
-          />
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="0.4 0.4"
-            result="glow3"
-          />
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="1 1"
-            result="glow4"
-          />
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="4 4"
-            result="glow5"
-          />
+      <filter id="expand-glow" x="-50%" y="-50%" width="200%" height="200%">
+    
+      <feMorphology in="SourceGraphic" operator="dilate" radius="2" result="expanded"/>
+ 
+      <feGaussianBlur in="expanded" stdDeviation="1.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>  
 
-          <feFlood
-            flood-color="#00FFFF"
-            flood-opacity="0.5"
-            result="glowColor"
-          />
+    <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blurredFade"/>
+      <feColorMatrix in="blurredFade" type="matrix"
+                     values="1.5 0 0 0 0
+                             0 1 0 0 0
+                             0 0 1 0 0
+                             0 0 0 1.5 0"/>
+    </filter>
 
-          <feComposite
-            in="glowColor"
-            in2="glow1"
-            operator="in"
-            result="glowMask1"
-          />
-          <feComposite
-            in="glowColor"
-            in2="glow2"
-            operator="in"
-            result="glowMask2"
-          />
-          <feComposite
-            in="glowColor"
-            in2="glow3"
-            operator="in"
-            result="glowMask3"
-          />
-          <feComposite
-            in="glowColor"
-            in2="glow4"
-            operator="in"
-            result="glowMask4"
-          />
-          <feComposite
-            in="glowColor"
-            in2="glow5"
-            operator="in"
-            result="glowMask5"
-          />
-
-          <feMerge>
-            <feMergeNode in="glowMask1" />
-            <feMergeNode in="glowMask2" />
-            <feMergeNode in="glowMask3" />
-            <feMergeNode in="glowMask4" />
-            <feMergeNode in="glowMask5" />
-          </feMerge>
-        </filter>
-        <filter id="myShadow">
-          <feDropShadow
-            dx="3"
-            dy="3"
-            stdDeviation="10"
-            flood-color="black"
-            flood-opacity="0.7"
-          />
-        </filter>
-
-        <filter
-          id="contrast-darken"
-          x="-50%"
-          y="-50%"
-          width="200%"
-          height="200%"
-        >
-          <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" result="blur" />
-
-          <feOffset dx="1" dy="1" result="shadowOffset" />
-          <feFlood
-            flood-color="#000000"
-            flood-opacity="0.9"
-            result="shadowColor"
-          />
-          <feComposite
-            in="shadowColor"
-            in2="shadowOffset"
-            operator="in"
-            result="shadow"
-          />
-
-          <feComponentTransfer in="SourceGraphic" result="sharpened">
-            <feFuncA type="linear" slope="2" intercept="-0.1" />
-          </feComponentTransfer>
-
-          <feMerge>
-            <feMergeNode in="shadow" />
-            <feMergeNode in="sharpened" />
-          </feMerge>
-        </filter>
       </defs>
       <path
         class="animated layer"
         d="M 10 10 L 10 90 L 35 90 L 35 60 L 65 60 L 65 90 L 90 90 L 90 10 L 65 10 L 65 40 L 35 40 L 35 10 Z"
       />
       <path
+          
         class="animated layer-thick"
         d="M 10 10 L 10 90 L 35 90 L 35 60 L 65 60 L 65 90 L 90 90 L 90 10 L 65 10 L 65 40 L 35 40 L 35 10 Z"
       />
