@@ -23,7 +23,7 @@
         stroke: rgba(0, 255, 255, 0.7);
 
         stroke-width: 1;
-        filter: url(#expand-glow);
+        filter: url(#neonS);
       }
       .animated {
         fill: none;
@@ -53,20 +53,41 @@
 
     <svg viewBox="0 0 100 100" width="250px" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <filter id="expand-glow" x="-50%" y="-50%" width="200%" height="200%">
+        <filter id="neonS" x="-50%" y="-50%" width="200%" height="200%">
           <feMorphology
             in="SourceGraphic"
             operator="dilate"
-            radius="2"
-            result="expanded"
+            radius="1"
+            result="m1"
+          />
+          <feGaussianBlur in="m1" stdDeviation="0.2" result="b1" />
+
+          <feMorphology
+            in="SourceGraphic"
+            operator="dilate"
+            radius="1"
+            result="m2"
+          />
+          <feGaussianBlur in="m2" stdDeviation="5" result="b2" />
+
+          <feColorMatrix
+            in="b1"
+            type="matrix"
+            values="3 0 0 0 0  
+                         0 3 0 0 0  
+                         0 0 3 0 0  
+                         0 0 0 3 0"
+            result="b1_enhanced"
           />
 
-          <feGaussianBlur in="expanded" stdDeviation="1.2" result="blur" />
           <feMerge>
-            <feMergeNode in="blur" />
+            <feMergeNode in="b2" />
+            <feMergeNode in="b2" />
+            <feMergeNode in="b1_enhanced" />
             <feMergeNode in="SourceGraphic" />
           </feMerge>
         </filter>
+
 
         <filter id="softFade" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur
